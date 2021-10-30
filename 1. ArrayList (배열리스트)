@@ -61,7 +61,6 @@ int main(void)
 ** 헤더파일
 
 #ifndef __ARRAY_LIST_H__
-#include "NameCard.h"
 
 #define __ARRAY_LIST_H__
 
@@ -79,7 +78,6 @@ typedef struct __ArrayList
 	int curPosition;
 } ArrayList;
 
-/*** ArrayList와 관련된 연산들 ****/
 typedef ArrayList List;
 
 void ListInit(List* plist);
