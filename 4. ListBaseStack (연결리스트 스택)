@@ -1,0 +1,105 @@
+** MAIN 코드
+
+#include <stdio.h>
+#include "ListBaseStack.h"
+
+int main(void)
+{
+   // Stack의 생성 및 초기화 ///////
+   Stack stack;
+   StackInit(&stack);
+
+   // 데이터 넣기 ///////
+   SPush(&stack, 1);  SPush(&stack, 2);
+   SPush(&stack, 3);  SPush(&stack, 4);
+   SPush(&stack, 5);
+
+   // 데이터 꺼내기 ///////
+   while(!SIsEmpty(&stack))
+      printf("%d ", SPop(&stack)); 
+
+   return 0;
+}
+
+** ListBaseStack.h (헤더파일)
+'
+#ifndef __lb_stack_h__
+#define __lb_stack_h__
+
+#define TRUE   1
+#define FALSE   0
+
+typedef int Data;
+
+typedef struct _node // 연결 리스트의 노드 표현
+{
+	Data data;
+	struct _node* next;
+} Node;
+
+typedef struct _liststack // 연결 리스트 기반 스택을 표현한 구조체
+{
+	Node* head;
+} liststack;
+
+
+typedef liststack Stack;
+
+void stackinit(Stack* pstack);
+int sisempty(Stack* pstack);
+
+void spush(Stack* pstack, Data data);
+Data spop(Stack* pstack);
+Data speek(Stack* pstack);
+
+#endif
+
+** ListBaseStack.c (소스파일)
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "ListBaseStack.h"
+
+void StackInit(Stack * pstack)
+{
+    pstack->head = NULL;
+}
+
+int SIsEmpty(Stack* pstack)
+{
+    if (pstack->head == NULL)
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+void SPush(Stack* pstack, Data data)
+{
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+
+    newNode->next = pstack->head;
+    pstack->head = newNode;
+}
+Data SPop(Stack * pstack)
+{
+    Data rdata;
+    Node* rnode;
+
+    rdata = pstack->head->data;
+    rnode = pstack->head;
+
+    pstack->head = pstack->head->next;
+
+    free(rnode);
+    return rdata;
+}
+
+Data SPeek(Stack * pstack)
+{
+    return pstack->head->data;
+}
