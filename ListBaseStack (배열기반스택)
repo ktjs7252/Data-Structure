@@ -1,0 +1,93 @@
+** MAIN 코드
+
+#include <stdio.h>
+#include "ArrayBaseStack.h"
+
+int main(void)
+{
+	Stack stack;
+	StackInit(&stack);
+
+	SPush(&stack, 1);  SPush(&stack, 2);
+   SPush(&stack, 3);  SPush(&stack, 4);
+   SPush(&stack, 5);
+
+   while (!SIsEmpty(&stack))
+   {
+	   printf("%d ", SPop(&stack));
+   }
+   return 0;
+}
+
+** ArrayBaseStack.h (헤더파일)
+
+#ifndef __AB_STACK_H__
+#define __AB_STACK_H__
+
+#define TRUE   1
+#define FALSE   0
+#define STACK_LEN   100
+
+typedef int Data;
+
+typedef struct _arrayStack
+{
+	Data stackArr[STACK_LEN];
+	int topIndex;
+} ArrayStack;
+
+typedef ArrayStack Stack;
+
+void StackInit(Stack* pstack);
+int SIsEmpty(Stack* pstack);
+
+void SPush(Stack* pstack, Data data);
+Data SPop(Stack* pstack);
+Data SPeek(Stack* pstack);
+
+#endif
+
+** ArrayBaseStack.c 소스파일
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "ArrayBaseStack.h"
+
+void StackInit(Stack* pstack)
+{
+    pstack->topIndex = -1;
+}
+
+int SIsEmpty(Stack* pstack)
+{
+    if (pstack->topIndex == -1)
+    {
+        return TRUE;
+  }
+    else
+    {
+        return FALSE;
+    }
+}
+
+void SPush(Stack* pstack, Data data)
+{
+    pstack->topIndex += 1;
+    pstack -> stackArr[pstack->topIndex] = data;
+}
+
+Data SPop(Stack* pstack)
+{
+    int rIdx;
+
+    rIdx = pstack->topIndex;
+    pstack->topIndex -= 1;
+
+    return pstack->stackArr[rIdx];
+}
+
+Data SPeek(Stack* pstack)
+{
+    return pstack->stackArr[pstack->topIndex];
+}
+
