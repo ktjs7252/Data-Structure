@@ -20,3 +20,8 @@ typedef struct _heap
 	int numOfData;
 	HeapElem heapArr[HEAP_LEN];
 } Heap;
+/*** Heap 관련 연산들 ****/
+void HeapInit(Heap* ph);
+int HIsEmpty(Heap* ph);
+void HInsert(Heap* ph, HData data, Priority pr);
+HData HDelete(Heap* ph);
